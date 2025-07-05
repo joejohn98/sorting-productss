@@ -27,12 +27,23 @@ const ProductsList = () => {
     fetchProducts();
   }, []);
 
+  const handleLowToHigh = () => {
+    const sortedProducts = Array.from(products).sort((a,b) => a.price - b.price)
+    setProducts(sortedProducts)
+  }
+
+
   if (isLoading) return <p style={styles.loading}>Loading...</p>;
 
   if (error) return <p style={styles.error}>Error: {error}</p>;
 
   return (
-    <div style={styles.container}>
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <div style={styles.sortButtons}>
+        <button style={styles.button} onClick={handleLowToHigh}>Low to High</button> <button style={styles.button}>High to Low</button>
+        <button style={styles.button}>Reset</button>
+      </div>
+      <div style={styles.container}>
       {products.map((product) => (
         <div key={product.id} style={styles.productCard}>
           <h2> {product.title}</h2>
@@ -41,6 +52,7 @@ const ProductsList = () => {
           <img src={product.image} alt={product.title} style={styles.image} />
         </div>
       ))}
+      </div>
     </div>
   );
 };
@@ -52,6 +64,21 @@ const styles = {
   },
   error: {
     color: "red",
+  },
+  sortButtons: {
+    display: "flex",
+    justifyContent: "center" as const,
+    gap: "10px",
+    marginBottom: "20px",
+  },
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    cursor: "pointer",
+    borderRadius: "4px",
+    border: "none",
+    backgroundColor: "#007bff",
+    color: "#fff",
   },
   container: {
     display: "flex",
