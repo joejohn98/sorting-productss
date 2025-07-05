@@ -28,10 +28,23 @@ const ProductsList = () => {
   }, []);
 
   const handleLowToHigh = () => {
-    const sortedProducts = Array.from(products).sort((a,b) => a.price - b.price)
-    setProducts(sortedProducts)
-  }
+    const sortedProducts = Array.from(products).sort(
+      (a, b) => a.price - b.price
+    );
+    setProducts(sortedProducts);
+  };
 
+  const handleHighToLow = () => {
+    const sortedProducts = Array.from(products).sort(
+      (a, b) => b.price - a.price
+    );
+    setProducts(sortedProducts);
+  };
+
+  const handleReset = () => {
+    const sortedProducts = Array.from(products).sort((a, b) => a.id - b.id);
+    setProducts(sortedProducts);
+  };
 
   if (isLoading) return <p style={styles.loading}>Loading...</p>;
 
@@ -40,18 +53,25 @@ const ProductsList = () => {
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
       <div style={styles.sortButtons}>
-        <button style={styles.button} onClick={handleLowToHigh}>Low to High</button> <button style={styles.button}>High to Low</button>
-        <button style={styles.button}>Reset</button>
+        <button style={styles.button} onClick={handleLowToHigh}>
+          Low to High
+        </button>{" "}
+        <button style={styles.button} onClick={handleHighToLow}>
+          High to Low
+        </button>
+        <button style={styles.button} onClick={handleReset}>
+          Reset
+        </button>
       </div>
       <div style={styles.container}>
-      {products.map((product) => (
-        <div key={product.id} style={styles.productCard}>
-          <h2> {product.title}</h2>
-          <p> {product.description}</p>
-          <p style={{ fontSize: "20px" }}>Price: ${product.price}</p>
-          <img src={product.image} alt={product.title} style={styles.image} />
-        </div>
-      ))}
+        {products.map((product) => (
+          <div key={product.id} style={styles.productCard}>
+            <h2> {product.title}</h2>
+            <p> {product.description}</p>
+            <p style={{ fontSize: "20px" }}>Price: ${product.price}</p>
+            <img src={product.image} alt={product.title} style={styles.image} />
+          </div>
+        ))}
       </div>
     </div>
   );
